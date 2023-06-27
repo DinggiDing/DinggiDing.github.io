@@ -51,7 +51,9 @@ const StyledContentWrapper = styled(ContentWrapper)`
       }
     }
     .subtitle {
-      margin-top: -0.75rem;
+      font-size: 1.5rem;
+      font-weight: normal;
+      margin-top: -0.35rem;
     }
     .description {
       font-size: 1.125rem;
@@ -124,12 +126,13 @@ const Hero = ({ content }) => {
             </div>
             {frontmatter.title}
           </h1>
-          <h4 className="subtitle">
-            {frontmatter.subtitlePrefix}{" "}
-            <AnimatedUnderlining animate={uControls} big>
-              {frontmatter.subtitle}
+          <h2 className="subtitle">
+            {"- "}
+            <AnimatedUnderlining animate={uControls} small>
+              {frontmatter.subtitle}{" "}
             </AnimatedUnderlining>
-          </h4>
+            {frontmatter.subtitlePrefix}
+          </h2>
           <div className="description">
             <MDXRenderer>{body}</MDXRenderer>
           </div>

@@ -9,6 +9,8 @@ import { useOnScreen } from "../../hooks/"
 import Context from "../../context/"
 import ContentWrapper from "../../styles/contentWrapper"
 
+import { Link } from "gatsby"
+
 const StyledSection = styled.section`
   width: 100%;
   height: auto;
@@ -93,7 +95,9 @@ const About = ({ content }) => {
           initial={{ opacity: 0, y: 20 }}
           animate={tControls}
         >
-          <h3 className="section-title">{frontmatter.title}</h3>
+          <Link to="/project1">
+            <h3 className="section-title">{frontmatter.title}</h3>
+          </Link>
           <div className="text-content">
             <MDXRenderer>{body}</MDXRenderer>
           </div>

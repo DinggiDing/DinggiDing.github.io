@@ -1,4 +1,4 @@
-import React, { useRef, useContext, useEffect } from "react"
+import React, { useRef, useContext, useEffect, useState } from "react"
 import PropTypes from "prop-types"
 import styled from "styled-components"
 import Img from "gatsby-image"
@@ -8,7 +8,6 @@ import { motion, useAnimation } from "framer-motion"
 import { useOnScreen } from "../../hooks/"
 import Context from "../../context/"
 import ContentWrapper from "../../styles/contentWrapper"
-
 import { Link } from "gatsby"
 
 const StyledSection = styled.section`
@@ -69,6 +68,24 @@ const About = ({ content }) => {
   const { isIntroDone } = useContext(Context).state
   const tControls = useAnimation()
   const iControls = useAnimation()
+  const useOnScreen = (ref, rootMargin = "-100px") => {
+    const [isIntersecting, setIntersecting] = useState(false)
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          setIntersecting(entry.isIntersecting)
+        },
+        { rootMargin }
+      )
+      if (ref.current) {
+        observer.observe(ref.current)
+      }
+      return () => {
+        observer.unobserve(ref.current)
+      }
+    }, [ref, rootMargin])
+    return isIntersecting
+  }
 
   // Required for animating the text content
   const tRef = useRef()
@@ -92,7 +109,7 @@ const About = ({ content }) => {
         <motion.div
           className="inner-wrapper"
           ref={tRef}
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0.5, y: 20 }}
           animate={tControls}
         >
           <Link to="/project1">
@@ -105,7 +122,7 @@ const About = ({ content }) => {
         <motion.div
           className="image-content"
           ref={iRef}
-          initial={{ opacity: 0, x: 20 }}
+          initial={{ opacity: 0.5, x: 20 }}
           animate={iControls}
         >
           <Img

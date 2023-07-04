@@ -141,6 +141,7 @@ export const pageQuery = graphql`
             title
             category
             emoji
+            link
             external
             github
             screenshot {

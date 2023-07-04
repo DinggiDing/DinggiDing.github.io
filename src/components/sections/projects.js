@@ -13,6 +13,7 @@ import Underlining from "../../styles/underlining"
 import Button from "../../styles/button"
 import Icon from "../../components/icons"
 import { lightTheme, darkTheme } from "../../styles/theme"
+import { Link } from "gatsby"
 
 const StyledSection = styled.section`
   width: 100%;
@@ -219,8 +220,26 @@ const Projects = ({ content }) => {
       setOnScreen(updatedOnScreen)
     }
   }
+  const useOnScreen = (ref, rootMargin = "-100px") => {
+    const [isIntersecting, setIntersecting] = useState(false)
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          setIntersecting(entry.isIntersecting)
+        },
+        { rootMargin }
+      )
+      if (ref.current) {
+        observer.observe(ref.current)
+      }
+      return () => {
+        observer.unobserve(ref.current)
+      }
+    }, [ref, rootMargin])
+    return isIntersecting
+  }
   const pVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0.5, y: 20 },
     visible: { opacity: 1, y: 0 },
   }
 
@@ -242,7 +261,7 @@ const Projects = ({ content }) => {
   const tRef = useRef()
   const tOnScreen = useOnScreen(tRef)
   const tVariants = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: 0.5 },
     visible: { opacity: 1 },
   }
 
@@ -250,7 +269,7 @@ const Projects = ({ content }) => {
   const bRef = useRef()
   const bOnScreen = useOnScreen(bRef)
   const bVariants = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: 0.5 },
     visible: { opacity: 1 },
   }
 
@@ -288,7 +307,9 @@ const Projects = ({ content }) => {
                     <div className="category">
                       {frontmatter.emoji} {frontmatter.category}
                     </div>
-                    <div className="title">{frontmatter.title}</div>
+                    <Link to={frontmatter.link}>
+                      <div className="title">{frontmatter.title}</div>
+                    </Link>
                     <MDXRenderer>{body}</MDXRenderer>
                     <div className="tags">
                       {frontmatter.tags.map(tag => (

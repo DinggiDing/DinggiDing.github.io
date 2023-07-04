@@ -116,6 +116,24 @@ const Interests = ({ content }) => {
 
   const [shownInterests, setShownInterests] = useState(shownItems)
 
+  const useOnScreen = (ref, rootMargin = "-300px") => {
+    const [isIntersecting, setIntersecting] = useState(false)
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          setIntersecting(entry.isIntersecting)
+        },
+        { rootMargin }
+      )
+      if (ref.current) {
+        observer.observe(ref.current)
+      }
+      return () => {
+        observer.unobserve(ref.current)
+      }
+    }, [ref, rootMargin])
+    return isIntersecting
+  }
   const ref = useRef()
   const onScreen = useOnScreen(ref)
 
@@ -159,7 +177,7 @@ const Interests = ({ content }) => {
               className="interest"
               key={key}
               custom={key}
-              initial={{ opacity: 0, scaleY: 0 }}
+              initial={{ opacity: 0.1, scaleY: 0.1 }}
               animate={iControls}
             >
               <Img className="icon" fixed={icon.childImageSharp.fixed} /> {name}

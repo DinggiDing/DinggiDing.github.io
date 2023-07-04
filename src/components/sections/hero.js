@@ -127,7 +127,7 @@ const Hero = ({ content }) => {
             {frontmatter.title}
           </h1>
           <h2 className="subtitle">
-            {"- "}
+            {"───  "}
             <AnimatedUnderlining animate={uControls} small>
               {frontmatter.subtitle}{" "}
             </AnimatedUnderlining>

@@ -4,17 +4,35 @@ import styled from "styled-components"
 import Img from "gatsby-image"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 import { motion, useAnimation } from "framer-motion"
+import { graphql, useStaticQuery } from "gatsby"
 
 import Context from "../../context/"
 import ContentWrapper from "../../styles/contentWrapper"
 import Underlining from "../../styles/underlining"
 import Social from "../social"
 import { lightTheme, darkTheme } from "../../styles/theme"
+import BackgroundImage from "gatsby-background-image"
 
-const StyledSection = styled.section`
+const StyledSection = styled(BackgroundImage)`
   width: 100%;
-  height: auto;
-  background: ${({ theme }) => theme.colors.background};
+  height: 500px; /* Set the desired height for the background */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+`
+
+const query = graphql`
+  query {
+    backgroundImage: file(
+      relativePath: { eq: "index/hero/latest_hero.png" }
+    ) {
+      childImageSharp {
+        fluid(maxWidth: 1920, quality: 100) {
+          ...GatsbyImageSharpFluid_withWebp
+        }
+      }
+    }
+  }
 `
 
 const StyledContentWrapper = styled(ContentWrapper)`
@@ -24,9 +42,11 @@ const StyledContentWrapper = styled(ContentWrapper)`
     min-height: 60vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     margin-bottom: 6rem;
     @media (min-width: ${({ theme }) => theme.breakpoints.sm}) {
+      flex-direction: row;
+      justify-content: space-between;
       margin-bottom: 4rem;
     }
     .greetings {
@@ -43,6 +63,11 @@ const StyledContentWrapper = styled(ContentWrapper)`
         width: 3rem;
         height: 3rem;
       }
+    }
+    .inner-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
     .title {
       margin-bottom: 1.5rem;
@@ -74,6 +99,9 @@ const Hero = ({ content }) => {
   const sControls = useAnimation()
   const uControls = useAnimation()
 
+  const data = useStaticQuery(query)
+  const backgroundImage = data.backgroundImage.childImageSharp.fluid
+
   // Start Animations after the splashScreen sequence is done
   useEffect(() => {
     const pageLoadSequence = async () => {
@@ -104,9 +132,10 @@ const Hero = ({ content }) => {
   }, [isIntroDone, darkMode, eControls, gControls, sControls, uControls])
 
   return (
-    <StyledSection id="hero">
+    <StyledSection fluid={backgroundImage} id="hero">
       <StyledContentWrapper>
         <motion.div
+          className="inner-wrapper"
           initial={{ opacity: 0, y: 20 }}
           animate={gControls}
           data-testid="animated-heading"
@@ -136,8 +165,6 @@ const Hero = ({ content }) => {
           <div className="description">
             <MDXRenderer>{body}</MDXRenderer>
           </div>
-        </motion.div>
-        <motion.div initial={{ opacity: 0, x: 20 }} animate={sControls}>
           <Social fontSize=".95rem" padding=".3rem 1.25rem" width="auto" />
         </motion.div>
       </StyledContentWrapper>

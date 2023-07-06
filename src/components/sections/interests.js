@@ -12,8 +12,9 @@ import Button from "../../styles/button"
 const StyledSection = styled.section`
   width: 100%;
   height: auto;
-  background: ${({ theme }) => theme.colors.background};
+  background: #FFC448;
   margin-top: 6rem;
+  margin-botton: 6rem;
 `
 
 const StyledContentWrapper = styled(ContentWrapper)`
@@ -28,6 +29,7 @@ const StyledContentWrapper = styled(ContentWrapper)`
     @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
       padding-right: 2.5rem;
       padding-left: 2.5rem;
+      padding-bottom: 2rem;
     }
     .section-title {
       padding-right: 2.5rem;

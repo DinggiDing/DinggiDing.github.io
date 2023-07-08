@@ -32,7 +32,7 @@ const StyledSection = styled.section`
 const StyledContentWrapper = styled(ContentWrapper)`
   && {
     width: 100%;
-    max-width: 36rem;
+    max-width: 56rem;
     margin: 0;
     padding: 0;
     height: 100%;

@@ -11,28 +11,11 @@ import ContentWrapper from "../../styles/contentWrapper"
 import Underlining from "../../styles/underlining"
 import Social from "../social"
 import { lightTheme, darkTheme } from "../../styles/theme"
-import BackgroundImage from "gatsby-background-image"
 
-const StyledSection = styled(BackgroundImage)`
+const StyledSection = styled.section`
   width: 100%;
   height: 500px; /* Set the desired height for the background */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-`
-
-const query = graphql`
-  query {
-    backgroundImage: file(
-      relativePath: { eq: "index/hero/latest_hero.png" }
-    ) {
-      childImageSharp {
-        fluid(maxWidth: 1920, quality: 100) {
-          ...GatsbyImageSharpFluid_withWebp
-        }
-      }
-    }
-  }
+  position: relative;
 `
 
 const StyledContentWrapper = styled(ContentWrapper)`
@@ -99,8 +82,13 @@ const Hero = ({ content }) => {
   const sControls = useAnimation()
   const uControls = useAnimation()
 
-  const data = useStaticQuery(query)
-  const backgroundImage = data.backgroundImage.childImageSharp.fluid
+  const data = useStaticQuery(graphql`
+    query {
+      webmFile: file(relativePath: { eq: "index/hero/out.webm" }) {
+        publicURL
+      }
+    }
+  `)
 
   // Start Animations after the splashScreen sequence is done
   useEffect(() => {
@@ -132,8 +120,23 @@ const Hero = ({ content }) => {
   }, [isIntroDone, darkMode, eControls, gControls, sControls, uControls])
 
   return (
-    <StyledSection fluid={backgroundImage} id="hero">
+    <StyledSection id="hero">
       <StyledContentWrapper>
+        <video
+          autoPlay
+          muted
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "contain",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            zIndex: -1,
+          }}
+        >
+          <source src={data.webmFile.publicURL} type="video/webm" />
+        </video>
         <motion.div
           className="inner-wrapper"
           initial={{ opacity: 0, y: 20 }}

@@ -197,6 +197,7 @@ const StyledProject = styled(motion.div)`
     @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
       height: 18.75rem;
     }
+    object-fit: cover;
   }
 `
 
@@ -360,6 +361,8 @@ const Projects = ({ content }) => {
                     onChange={() => setVisibleProject(frontmatter.position)}
                   >
                     <Img
+                      style={{ height: "100%" }}
+                      imgStyle={{ objectFit: "contain" }}
                       className="screenshot"
                       fluid={frontmatter.screenshot.childImageSharp.fluid}
                     />

@@ -112,9 +112,7 @@ const About = ({ content }) => {
           initial={{ opacity: 0.5, y: 20 }}
           animate={tControls}
         >
-          <Link to="/project1">
-            <h3 className="section-title">{frontmatter.title}</h3>
-          </Link>
+          <h3 className="section-title">{frontmatter.title}</h3>
           <div className="text-content">
             <MDXRenderer>{body}</MDXRenderer>
           </div>

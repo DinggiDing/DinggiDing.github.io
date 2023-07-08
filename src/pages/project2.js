@@ -77,7 +77,7 @@ const Project2 = ({ data }) => {
                 zIndex: -1,
               }}
             >
-              <source src={data.webmFile.publicURL} type="video/webm" />
+              <source src={data.webmFile.publicURL} type="video/mp4" />
             </video>
             <h1 data-testid="heading" style={{ paddingTop: "3rem" }}>
                 {title}
@@ -122,7 +122,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    webmFile: file(relativePath: { eq: "project2/project2.webm" }) {
+    webmFile: file(relativePath: { eq: "project2/project2.mp4" }) {
         publicURL
     }
   }

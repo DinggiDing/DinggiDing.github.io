@@ -5,4 +5,5 @@
 <url> <loc>https://gatsby-starter-portfolio-minimal.netlify.app/privacy/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://gatsby-starter-portfolio-minimal.netlify.app/project1/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://gatsby-starter-portfolio-minimal.netlify.app/project2/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://gatsby-starter-portfolio-minimal.netlify.app/project3/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 </urlset>

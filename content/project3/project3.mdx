@@ -1,0 +1,88 @@
+---
+title: "🖥️ MLB baseball player salary prediction system using data mining"
+seoTitle: "Project"
+useSeoTitleSuffix: false
+useSplashScreen: false
+---
+
+> ## 개발 동기   
++ 야구는 현대의 가장 대중적인 스포츠 중 하나이며, 메이저리그는 전 세계에서 가장 영향력 있는 야구 리그로 인정받고 있다.
++ 메이저리그 팀은 인기를 바탕으로 막대한 수익을 얻고, 선수들은 높은 연봉을 받는데, 이 연봉의 편차는 극심하다.
++ 연봉의 차이를 이해하기 위해 데이터 분석 프로젝트를 진행하고, 투수를 대상으로 연봉 예측에 초점을 맞추기로 결정했다.
++ 투수는 야구에서 가장 중요한 역할을 맡으며, 그 역량 차이가 경기의 결과에 큰 영향을 준다.
++ 투수의 타자에 대한 허용 정도를 고려하여 연봉 예측 모델을 개발함으로써 투수의 특징을 뚜렷하게 분석하고자 한다. 
+
+![Alt Text](/project3_d1.png)
+___
+> ## 개발 목적      
+**_"분석을 통해 선수의 특성 값에 따라 투수의 기대 연봉을 가장 정확하게 예측하는 모델을 개발하여 야구계의 연봉 결정과 협상에 객관적인 지침을 제공하고, 야구에 대한 흥미를 높이며 관심을 유발”_** 
+___
+> ## 데이터 가공  
+> ### 데이터 추출 
+모든 데이터는 현재 메이저 리그의 리그 구성이 확립된 1998년 이후의 자료를 이용한다. 
+1. People Table
+2. Pitching Table
+3. PitchingPost Table
+4. Teams Table
+5. AwardsPlayer Table
+6. AllstarFull Table
+7. Salaries Table
+
+> ### 데이터 전처리
+1. 추출한 Table 결합하여 Raw Data 생성
+- 여러 Table을 병합하기 위한 Key 값으로 playerID, yearID, teamID 변수를 사용했다. 이 과정에서 발생하는 데이터 중복 문제는 아래의 처리를 거쳐 하나의 데이터 프레임을 만들었다.
+- 데이터 중복 문제 처리   
+
+> 2. Raw Data 내 전처리
+- lFinal_df.csv
+- 위의 Raw Data 내 전처리 과정에서 가장 큰 비중을 차지한 작업은 결측치와  이상치들에 대한 처리이다. 서로 다른 규모와 구조를 가지고 있는 데이터 셋들을 통합하는 과정에서 발생한 결측값들을 확인한 후 각 데이터의 특성에 맞는 아래의 방식으로 적절한 값을 채워넣었다.
+- salary  데이터 내 결측치 처리
+- 리그 / 포스트시즌 ERA의 이상치 처리
+- 수치형이 아닌 데이터 처리
+
+>>> 1, 2의 과정을 거쳐 최종으로 분석을 위한 초기 데이터 셋을 **lFinal_df** 라는 이름으로 완성했다.  
+>>> 이후의 분석은 모두 이 초기 데이터셋을 변형해 가며 시행되었다.  
+
+___
+> ## 데이터 분석
+> ### 모델
+ 파라미터 튜닝 ![Alt Text](/project3_d2.png)
+
+![Alt Text](/project3_d3.png)
+> Lasso, Ridge, DecisionTree, RandomForest, GBM 5가지 모델로 분석
+
+> ### 데이터프레임
+모두 기본 전처리 과정을 마친 lFinal_df (=DF1)를 기본으로 변형시켜 만들었다.
+
+>> ### DF1
+원본 데이터에서 사용할 table을 추출하여 결합한 후 전처리 과정을 거친 기본 데이터프레임이다.
+
+>> ### DF2
+DF1에서 아래의 내용을 변형 및 추가한 데이터프레임이다.
+- l_GM : 중간 계투로 던진 경기 (l_G - lGS) 생성
+- attendence.f : attendance 변수 범주화
+- career : 선수 연차 정보 (yearID - debut) 변수 생성
+- years_old : 현재 나이 (yearID - birthYear) 변수 생성
+- teamID, throws 변수 원핫 인코딩
+- lgID, divID, G, l_G, attendance, debut, birthYear, birthCountry, teamID, throws, stint 변수 제거
+
+>> ### DF3
+DF2에 논문을 참고하여 만든 추가지표(세이버매트릭스 지표)를 추가한 데이터프레임이다.
+
+>> ### DF4
+DF3에서 teamID를 원핫 인코딩 대신 teamID에 기반하여 Target-Encoding으로 대체한 데이터프레임이다.
+![Alt Text](/project3_d4.png)
+
+>> ### DF5
+DF4에서 salary와의 상관관계에 기반하여 일부 변수들을 선택해 2년치 시계열 처리한 데이터프레임이다.   
+_('l_W', 'l_GS', 'l_GM', 'l_CG', 'l_ER', 'l_IPouts', 'l_H', 'l_HR', 'l_BB','l_SO', 'BSR’)_
+
+>> ### DF6
+DF4에서 salary와의 상관계수가 0.24 이상인 열들만 추출한 데이터프레임이다.
+
+___
+> ## 결론
+![Alt Text](/project3_d5.png) 
+![Alt Text](/project3_d6.png)
+여러 차례의 feature engineering 과정에서 점진적으로 모델들의 예측 성능이 개선되었다(DF1 ~ DF4). 그 중에서도 teamID을 섬세하게 이용한 결과, 특히 random forest 모델에서 두드러진 성능 개선을 얻어냈다(DF4). 한편 feature들에 대한 시계열 처리나 상관계수 기반의 feature 선택 시도는 모델 예측 성능 개선에는 실패하였다.(DF5, DF6)
+___

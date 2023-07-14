@@ -12,7 +12,6 @@ import Button from "../../styles/button"
 const StyledSection = styled.section`
   width: 100%;
   height: auto;
-  background: #ffc448;
   margin-top: 6rem;
   margin-botton: 6rem;
 `

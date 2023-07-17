@@ -126,12 +126,12 @@ const Hero = ({ content }) => {
           autoPlay
           muted
           style={{
-            width: "100%",
+            width: "80%",
             height: "100%",
             objectFit: "contain",
             position: "absolute",
             top: 0,
-            left: 0,
+            right: 0,
             zIndex: -1,
           }}
         >

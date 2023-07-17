@@ -15,7 +15,7 @@ import Underlining from "../styles/underlining"
 const StyledSection = styled.section`
   width: 100%;
   max-width: 62.5rem;
-  margin: 55rem auto 0;
+  margin: 24rem auto 0;
   padding: 0 2.5rem;
   height: auto;
   background: ${({ theme }) => theme.colors.background};
@@ -28,6 +28,9 @@ const StyledSection = styled.section`
   h3 {
     font-size: 1rem;
     margin-bottom: 1rem;
+  }
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    margin: 55rem auto 0;
   }
 `
 

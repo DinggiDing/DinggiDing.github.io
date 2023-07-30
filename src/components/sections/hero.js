@@ -84,7 +84,7 @@ const Hero = ({ content }) => {
 
   const data = useStaticQuery(graphql`
     query {
-      webmFile: file(relativePath: { eq: "index/hero/out.webm" }) {
+      webmFile: file(relativePath: { eq: "index/hero/out.mp4" }) {
         publicURL
       }
     }
@@ -135,7 +135,7 @@ const Hero = ({ content }) => {
             zIndex: -1,
           }}
         >
-          <source src={data.webmFile.publicURL} type="video/webm" />
+          <source src={data.webmFile.publicURL} type="video/mp4" />
         </video>
         <motion.div
           className="inner-wrapper"

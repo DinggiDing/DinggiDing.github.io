@@ -144,7 +144,7 @@ const Project1 = ({ data }) => {
                 <LeftSection>
                     <h2>My Role</h2>
                     <div className="tags">
-                        <Underlining highlight> - AR Contents <br/></Underlining>
+                        <Underlining highlight> - AR Content <br/></Underlining>
                         <Underlining highlight> - Development </Underlining>
                     </div>
                 </LeftSection>

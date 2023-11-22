@@ -234,7 +234,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    webmFile: file(relativePath: { eq: "project1/finalzip.mp4" }) {
+    webmFile: file(relativePath: { eq: "project1/final_zip.mp4" }) {
       publicURL
     }
     image1: file(relativePath: { eq: "project1/icon1.png" }) {

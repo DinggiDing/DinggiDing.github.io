@@ -22,5 +22,6 @@ module.exports = {
   rules: {
     "prettier/prettier": "error",
     "react/no-find-dom-node": "off",
+    "react/prop-types": "off"
   },
 }

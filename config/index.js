@@ -74,7 +74,7 @@ module.exports = {
     // },
     {
       name: "Mail",
-      url: "mailto:mail@konstantin.digital",
+      url: "mailto:qotjdwo7151@naver.com",
     },
   ],
 
@@ -97,7 +97,7 @@ module.exports = {
     button: {
       useFileName: true,
       name: "CV",
-      fileName: "slightCV.pdf", // the file has to be placed inside the static folder at the root level
+      fileName: "rlightCV.pdf", // the file has to be placed inside the static folder at the root level
       url: "", // if useFileName=false, you can set an anchor link here and use the button for navigational purposes
     },
   },
